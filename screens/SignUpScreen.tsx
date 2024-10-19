@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/types';
+import axios from 'axios';
 
 type SignUpScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Sign Up'>;
 
@@ -14,10 +15,21 @@ const SignUpScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSignUp = () => {
-    // Xử lý đăng ký...
-  };
+  const fetch = async () => {
+    const data = await axios.post('https://be-react-native.vercel.app/users', {
+      username: "chung",
+      email: email,
+      password: password,
+      fullName: fullName,
+      role: 'Admin'
+    });
+    console.log("Check:", data.data);
+  }
 
+  const handleSignUp = () => {
+    // Xử lý validation ....
+    fetch();
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Đăng Ký</Text>
